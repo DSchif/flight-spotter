@@ -1,6 +1,5 @@
-import { useState, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvents, Circle, Polygon } from 'react-leaflet';
-import { LatLng } from 'leaflet';
+import { useState } from 'react';
+import { MapContainer, TileLayer, Marker, useMapEvents, Polygon } from 'react-leaflet';
 import { ViewConfig, Location } from '../types';
 import 'leaflet/dist/leaflet.css';
 

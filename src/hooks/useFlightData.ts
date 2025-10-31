@@ -35,7 +35,7 @@ export const useFlightData = (viewConfig: ViewConfig | null) => {
         .filter((ac): ac is VisibleAircraft => ac !== null)
         .filter((ac) => {
           // Filter by distance
-          if (ac.distance > viewConfig.maxDistance) return false;
+          if (ac.distance > config.maxDistance) return false;
 
           // Filter by view cone
           if (!isInViewCone(ac.bearing, config.leftBearing, config.rightBearing)) {

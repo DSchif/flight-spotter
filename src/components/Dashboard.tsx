@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 import { ViewConfig } from '../types';
 import { useFlightData } from '../hooks/useFlightData';
 import { useWeather } from '../hooks/useWeather';
@@ -14,12 +14,6 @@ interface DashboardProps {
 const Dashboard = ({ viewConfig, onReset }: DashboardProps) => {
   const { aircraft, loading, error } = useFlightData(viewConfig);
   const { weather } = useWeather(viewConfig.location);
-  const [prevAircraftIds, setPrevAircraftIds] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    const currentIds = new Set(aircraft.map(ac => ac.icao24));
-    setPrevAircraftIds(currentIds);
-  }, [aircraft]);
 
   const getBearingName = (bearing: number): string => {
     const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
