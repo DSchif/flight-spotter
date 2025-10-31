@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvents, Polygon } from 'react-leaflet';
+import { useState, useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, useMapEvents, Polygon, useMap } from 'react-leaflet';
 import { ViewConfig, Location } from '../types';
 import 'leaflet/dist/leaflet.css';
 
@@ -7,6 +7,20 @@ interface SetupProps {
   onComplete: (config: ViewConfig) => void;
   initialConfig?: ViewConfig | null;
 }
+
+// Component to fix map size after mount
+const MapSizeFixer = () => {
+  const map = useMap();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [map]);
+
+  return null;
+};
 
 // Calculate a point at a given distance and bearing from origin
 const calculatePoint = (origin: Location, bearing: number, distanceKm: number): [number, number] => {
@@ -188,6 +202,7 @@ const Setup = ({ onComplete, initialConfig }: SetupProps) => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+          <MapSizeFixer />
           <MapClickHandler onLocationSelect={handleLocationSelect} />
           {location && (
             <>

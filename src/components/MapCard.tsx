@@ -9,6 +9,20 @@ interface MapCardProps {
   aircraft: VisibleAircraft[];
 }
 
+// Component to fix map size after mount
+const MapSizeFixer = () => {
+  const map = useMap();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [map]);
+
+  return null;
+};
+
 // Calculate a point at a given distance and bearing from origin
 const calculatePoint = (origin: { latitude: number; longitude: number }, bearing: number, distanceKm: number): [number, number] => {
   const R = 6371; // Earth radius in km
@@ -139,6 +153,7 @@ const MapCard = ({ viewConfig, aircraft }: MapCardProps) => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
+          <MapSizeFixer />
           <MapBoundsFitter viewConePoints={viewConePoints} />
 
           {/* View cone */}
