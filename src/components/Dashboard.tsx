@@ -1,4 +1,3 @@
-import React from 'react';
 import { ViewConfig } from '../types';
 import { useFlightData } from '../hooks/useFlightData';
 import { useWeather } from '../hooks/useWeather';
